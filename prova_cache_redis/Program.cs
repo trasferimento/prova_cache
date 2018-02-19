@@ -14,6 +14,7 @@ namespace prova_cache_redis
     {
         public static void Main(string[] args)
         {
+            Console.WriteLine("lancio il web server");
             BuildWebHost(args).Run();
         }
 
