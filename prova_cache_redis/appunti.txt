@@ -23,6 +23,5 @@ oc logs -f bc/miocore     bc= build
 oc logs  dc/miocore       dc= e' il pod-conteiner
 
 oc describe bc/miocore    
-
 //se il web hook non funzion asse, posso forzare una ricompilazione con
 oc start-build miocore -n test56

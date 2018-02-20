@@ -28,7 +28,7 @@ namespace prova_cache_redis.Controllers
 
         public IActionResult About()
         {
-            _logger.LogInformation("richiesta pagina Home\About (information)");
+            _logger.LogInformation("richiesta pagina HomeAbout (information)");
             ViewData["Message"] = "Your application description page.";
 
             return View();
