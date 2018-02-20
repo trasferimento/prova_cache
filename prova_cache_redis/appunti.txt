@@ -30,3 +30,12 @@ oc logs  dc/miocore       dc= e' il pod-conteiner
 oc describe bc/miocore    
 //se il web hook non funzion asse, posso forzare una ricompilazione con
 oc start-build miocore -n test56
+
+-------
+
+creato da template redis epemerha
+
+       Password: NlAUjavXbRBT7r1x
+ Connection URL: redis://redis:6379/
+
+ aggiungo il package Microsoft.Extensions.Caching.Distributed

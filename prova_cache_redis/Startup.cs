@@ -22,6 +22,13 @@ namespace prova_cache_redis
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            services.AddDistributedRedisCache(options =>
+            {
+                options.Configuration = "redis:6379";                
+                //options.InstanceName = "SampleInstance"; //opzionale
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
