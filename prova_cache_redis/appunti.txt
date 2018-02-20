@@ -6,6 +6,7 @@ github : https://github.com/trasferimento/prova_cache
 oc delete all --all
 
 creo un immagine ed un container
+oc delete bc/miocore
 oc delete dc/miocore
 oc new-app dotnet:2.0~https://github.com/trasferimento/prova_cache.git --name miocore --context-dir prova_cache_redis
 

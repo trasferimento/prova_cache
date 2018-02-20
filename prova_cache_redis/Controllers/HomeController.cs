@@ -4,14 +4,25 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using prova_cache_redis.Models;
 
 namespace prova_cache_redis.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ILogger _logger;
+
+       public HomeController(ILogger<HomeController> logger)
+        {            
+            _logger = logger;
+        }
+
         public IActionResult Index()
         {
+            _logger.LogWarning("richiesta pagina HomeIndex(information)");
+            _logger.LogInformation("richiesta pagina HomeIndex (information)");
+
             return View();
         }
 
