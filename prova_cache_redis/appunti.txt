@@ -10,6 +10,11 @@ oc delete bc/miocore
 oc delete dc/miocore
 oc new-app dotnet:2.0~https://github.com/trasferimento/prova_cache.git --name miocore --context-dir prova_cache_redis
 
+//poi espongo il servizio anceh all' esterno ( e non solo tra i pods ); fa lui il passaggioda 8080 a 80
+oc expose service/miocore
+//per vedere coem e' esposto su internet
+oc describe routes
+
 https://docs.openshift.com/enterprise/3.1/cli_reference/basic_cli_operations.html#cli-reference-basic-cli-operations
 
 

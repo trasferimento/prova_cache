@@ -20,7 +20,9 @@ namespace prova_cache_redis.Controllers
 
         public IActionResult Index()
         {
-            _logger.LogWarning("richiesta pagina HomeIndex(information)");
+
+
+            _logger.LogWarning("richiesta pagina HomeIndex(information) alle " + DateTime.Now);
             _logger.LogInformation("richiesta pagina HomeIndex (information)");
 
             return View();
