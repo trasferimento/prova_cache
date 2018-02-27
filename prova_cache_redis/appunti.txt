@@ -35,7 +35,7 @@ oc start-build miocore -n test56
 
 creato da template redis epemerha
 
-       Password: NlAUjavXbRBT7r1x
+    Password: uLMC28oj7UPYXDRM
  Connection URL: redis://redis:6379/
 
  aggiungo il package Microsoft.Extensions.Caching.Distributed

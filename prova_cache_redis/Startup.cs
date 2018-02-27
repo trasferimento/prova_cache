@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -13,7 +14,13 @@ namespace prova_cache_redis
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+//            Configuration = configuration;
+            var configBuilder = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            Configuration = configBuilder.Build();
+
         }
 
         public IConfiguration Configuration { get; }
@@ -23,11 +30,12 @@ namespace prova_cache_redis
         {
             services.AddMvc();
 
-            services.AddDistributedRedisCache(options =>
-            {
-                options.Configuration = "redis:6379";                
+            //QUESTA SAREBBE LA MODALITA' BAASE,senZA client.. NON VA
+            //services.AddDistributedRedisCache(options =>
+            //{
+              //  options.Configuration = "redis:6379";                
                 //options.InstanceName = "SampleInstance"; //opzionale
-            });
+            //});
 
         }
 
@@ -36,7 +44,7 @@ namespace prova_cache_redis
         {
             if (env.IsDevelopment())
             {
-                app.UseBrowserLink();
+               // app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
             }
             else
