@@ -2,16 +2,24 @@
 
 github : https://github.com/trasferimento/prova_cache
 
+in Team Exploer>imposta repository ci sono tutti i parametri erp GIT ,
+ce vengono salvati assieme al progetto come .gitingore ,  .gitattributes..
+e sovrascrivono i valori di feault di GIT
+
+per vedere cfg global 
+git config --global --list
+
+per togliere delle variabili 
+git config --global --unset http.proxy
+
 per lavorfae con git dietro proxy
 git config --global http.proxy http://proxyuser:proxypwd@proxy.server.com:8080
 
-per vedere cfg 
-git config --global --get http.proxy
+git config --global http.proxy http://sky\afarabeg:XXPWDXXXX@wsgwmi-prd1.sky.local:8080
+git config --global https.proxy https://sky\afarabeg:XXPWDXXXX@wsgwmi-prd1.sky.local:8080
 
-.gitconfig' file in your user directory (go to %USERPROFILE%):
-[http]     proxy = http://<proxy address>:<proxy port>
-[https]    proxy = https://<proxy address>:<proxy port>
 
+-----------------
 
 oc delete all --all
 

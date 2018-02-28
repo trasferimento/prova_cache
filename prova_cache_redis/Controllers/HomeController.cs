@@ -61,9 +61,9 @@ namespace prova_cache_redis.Controllers
                 string chiave = "orario";
                 string valore = DateTime.Now.ToLongTimeString();
 
-                string connection_string = "redis";
+                string connection_string = "redis,password=password";
                 _logger.LogInformation("provo a connettermi con : " + connection_string);
-                ConnectionMultiplexer mio_client_redis = ConnectionMultiplexer.Connect("localhost");
+                ConnectionMultiplexer mio_client_redis = ConnectionMultiplexer.Connect(connection_string);
 
                 IDatabase connessione_db = mio_client_redis.GetDatabase(); //connessione col db
 
