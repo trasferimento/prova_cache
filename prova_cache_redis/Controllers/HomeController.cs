@@ -50,8 +50,7 @@ namespace prova_cache_redis.Controllers
 
         public IActionResult Redis()
         {
-            _logger.LogInformation("richiesta pagina Redis (information)");
-
+            _logger.LogWarning("richiesta pagina Redis (information)");           
 
             try
             {
@@ -61,17 +60,17 @@ namespace prova_cache_redis.Controllers
                 string chiave = "orario";
                 string valore = DateTime.Now.ToLongTimeString();
 
-                string connection_string = "redis,password=password";
-                _logger.LogInformation("provo a connettermi con : " + connection_string);
+                string connection_string = "redis:6379,password=password";
+                _logger.LogWarning("provo a connettermi con : " + connection_string);
                 ConnectionMultiplexer mio_client_redis = ConnectionMultiplexer.Connect(connection_string);
 
                 IDatabase connessione_db = mio_client_redis.GetDatabase(); //connessione col db
 
-                _logger.LogInformation("inserisco nella  chiave=" + chiave + " il valore=" + valore);
+                _logger.LogWarning("inserisco nella  chiave=" + chiave + " il valore=" + valore);
                 if (connessione_db.StringSet(chiave, valore)) //scrive nuovo valore in chace, anche se esiste gia'
                 {
                     string val = connessione_db.StringGet(chiave); //recuepra da
-                    _logger.LogInformation("recuperato per la chiave="+ chiave + " valore=" +val);
+                    _logger.LogWarning("recuperato per la chiave="+ chiave + " valore=" +val);
                 }
 
             }
