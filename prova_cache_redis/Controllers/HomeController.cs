@@ -17,13 +17,10 @@ namespace prova_cache_redis.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger _logger;
-        //private readonly IDistributedCache _distributedCache;
-
-        //public HomeController(ILogger<HomeController> logger, IDistributedCache distributedCache)
+               
         public HomeController(ILogger<HomeController> logger)
         {            
-            _logger = logger;
-          //  _distributedCache = distributedCache;
+            _logger = logger;            
         }
 
         public IActionResult Index()
@@ -48,43 +45,7 @@ namespace prova_cache_redis.Controllers
         }
 
 
-        public IActionResult Redis()
-        {
-            _logger.LogWarning("richiesta pagina Redis (information)");           
 
-            try
-            {
-
-                //http://taswar.zeytinsoft.com/redis-for-net-developer-connecting-with-c/
-
-                string chiave = "orario";
-                string valore = DateTime.Now.ToLongTimeString();
-
-                string connection_string = "redis:6379,password=password";
-                _logger.LogWarning("provo a connettermi con : " + connection_string);
-                ConnectionMultiplexer mio_client_redis = ConnectionMultiplexer.Connect(connection_string);
-
-                IDatabase connessione_db = mio_client_redis.GetDatabase(); //connessione col db
-
-                _logger.LogWarning("inserisco nella  chiave=" + chiave + " il valore=" + valore);
-                if (connessione_db.StringSet(chiave, valore)) //scrive nuovo valore in chace, anche se esiste gia'
-                {
-                    string val = connessione_db.StringGet(chiave); //recuepra da
-                    _logger.LogWarning("recuperato per la chiave="+ chiave + " valore=" +val);
-                }
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogWarning("Eccezzione nel uso Redis client :" + ex.Message);
-            }
-
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

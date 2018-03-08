@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "RabbitMQ";
+}
+
+
+
+<div class="row">
+    <h3>Lancia producer </h3><br />
+
+    <button id="btnLanciaProducer" class="bottone">Go!</button>&nbsp;&nbsp;
+    <span id="risposta_LanciaProducer_icona" style="display: inline-block"></span>
+    <span id="risposta_LanciaProducer" class="ui-corner-all"></span>
+    <br /><br />
+</div>
+
+<div class="row">
+    <h3>Lancia Consumer </h3><br />
+
+    <button id="btnLanciaConsumer" class="bottone">Go!</button>&nbsp;&nbsp;
+    <span id="risposta_LanciaConsumer_icona" style="display: inline-block"></span>
+    <span id="risposta_LanciaConsumer" class="ui-corner-all"></span>
+    <br /><br />
+</div>
+
+<div></div>
+<div>
+    <ul>
+        <li>
+            @Html.ActionLink("Home", "Index", "Home")
+        </li>
+
+    </ul>
+</div>
+
+<!-- script della pagina -->
+@section Scripts {
+    <!-- carico JS della pagina  -->
+    <script src="~/js/RabbitMQ.js"></script>>
+
+        <!-- carico JS di JqueryUI senza Bundle-->
+        <script src="~/lib/jquery-ui/jquery-ui.js"></script>
+    <!-- carico CSS di JqueryUI senza Bundle-->
+    <link href="~/lib/jquery-ui/jquery-ui.css" rel="stylesheet" />
+}
+
