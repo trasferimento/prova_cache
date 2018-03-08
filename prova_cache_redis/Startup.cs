@@ -16,27 +16,31 @@ namespace prova_cache_redis
 {
     public class Startup
     {
-
+        // elementi che verranno iniettati con DI
         private readonly ILoggerFactory _loggerFactory;
         private readonly ILogger _logger;
+        public IConfiguration MiaConfiguration { get; }   //chissa perche' public...
 
         public Startup(IConfiguration configuration, ILoggerFactory loggerFactory)
         {
-            //            Configuration = configuration;
+            //            Configuration = configuration;  //non prendo quella di deafult..
+
+
             //aggiungo da appsettings.json
             //aggiungo da variabili ambiente
             var configBuilder = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true) //notare come venga riletta se cambia il file!!
             .AddEnvironmentVariables();
            
-            Configuration = configBuilder.Build();
+           
+            MiaConfiguration = configBuilder.Build(); // la istanzio
 
             _loggerFactory = loggerFactory;
             _logger = loggerFactory.CreateLogger<Startup>();
         }
 
-        public IConfiguration Configuration { get; }
+        
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -44,9 +48,10 @@ namespace prova_cache_redis
             _logger.LogInformation("[StartUp] Aggiungo come servizio MVC ");
             services.AddMvc();
 
-
+            //potrei anche passare iniettare la configurazione letta, di modo che sia accessibile dai controllers
+            //services.AddSingleton<IConfiguration>(MiaConfiguration);
      
-            if (Configuration["Redis:enabled"] == "yes")
+            if (MiaConfiguration["Redis:enabled"] == "yes")
             { 
             try
             {
@@ -56,13 +61,15 @@ namespace prova_cache_redis
                 //    "Server": "redis:6379",
                 //    "Password": "password"
                 //}
-                string redis_server= Configuration["Redis:Server"]; 
-                string redis_pwd = Configuration["Redis:Password"];
+                string redis_server= MiaConfiguration["Redis:Server"]; 
+                string redis_pwd = MiaConfiguration["Redis:Password"];
                 string connection_string = redis_server + ",password=" + redis_pwd;
                 //string connection_string = "redis:6379,password=password,name=sono_il_client_1";
                 _logger.LogInformation("Aggiungo come servizio Redis,e mi connetto con : " + connection_string);
                 ConnectionMultiplexer mio_client_redis = ConnectionMultiplexer.Connect(connection_string); //qui si prova a connettersi !!! mettere TRY !!
-               services.AddSingleton(mio_client_redis as IConnectionMultiplexer);
+
+                services.AddSingleton<IConnectionMultiplexer>(mio_client_redis);
+                // O scritto diversamente : services.AddSingleton(mio_client_redis as IConnectionMultiplexer);
             }
             catch ( Exception ex)
             {
@@ -71,15 +78,15 @@ namespace prova_cache_redis
 
             }
 
-            if (Configuration["RabbitMQ:enabled"] == "yes")
+            if (MiaConfiguration["RabbitMQ:enabled"] == "yes")
             {
                 try
                 {
-                    string UserName = Configuration["RabbitMQ:UserName"];
-                    string Password = Configuration["RabbitMQ:Password"];
-                    string VirtualHost = Configuration["RabbitMQ:VirtualHost"];
-                    string HostName = Configuration["RabbitMQ:HostName"];
-                    int Port = Convert.ToInt32( Configuration["RabbitMQ:Port"] );
+                    string UserName = MiaConfiguration["RabbitMQ:UserName"];
+                    string Password = MiaConfiguration["RabbitMQ:Password"];
+                    string VirtualHost = MiaConfiguration["RabbitMQ:VirtualHost"];
+                    string HostName = MiaConfiguration["RabbitMQ:HostName"];
+                    int Port = Convert.ToInt32( MiaConfiguration["RabbitMQ:Port"] );
 
                     //string connection_string = "amqp://user:pass@hostName:port/vhost"; 
                     string connection_string = "amqp://" + UserName + ":" + Password + "@" + HostName + ":" + Port + "/" + VirtualHost;
@@ -93,7 +100,7 @@ namespace prova_cache_redis
                     factory.Port = Port;
 
                     IConnection connessione = factory.CreateConnection();  //prova a connettersi
-                    services.AddSingleton<IConnection>(connessione);
+                    services.AddSingleton<IConnection>(connessione);  // passo direttamente l'oggetto ( non l'interfaccia ) 
 
                     _logger.LogInformation("RabbitMq connesso !! ");
                 }
