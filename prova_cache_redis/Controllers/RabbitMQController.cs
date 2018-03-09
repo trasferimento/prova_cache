@@ -115,6 +115,10 @@ namespace prova_cache_redis.Controllers
                                          autoAck: true,
                                          consumer: evento_consumer);
 
+                    //Aspetto per 2 secodni l'evento .....
+                    _logger.LogInformation("[LanciaConsumer] Sleep di 2 secondi per aspettare l'evento..");
+                    System.Threading.Thread.Sleep(2000);
+                    _logger.LogInformation("[LanciaConsumer] Fine dello sleep");
 
                 }
 
